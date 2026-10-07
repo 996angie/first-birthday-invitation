@@ -1,3 +1,9 @@
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+window.scrollTo(0, 0);
+
 document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================
@@ -218,79 +224,226 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+/* =========================
+   MONTH GALLERY + SWIPE
+========================= */
+
+function getMonthLabel(month) {
+  const monthNumber = Number(month);
+
+  if (monthNumber === 1) {
+    return "1 mesec";
+  }
+
+  if (monthNumber >= 2 && monthNumber <= 4) {
+    return `${monthNumber} meseca`;
+  }
+
+  return `${monthNumber} meseci`;
+}
+
+
+function changeMonth(month) {
+  const monthNumber = Number(month);
+
+  if (
+    !monthNumber ||
+    monthNumber < 1 ||
+    monthNumber > 12
+  ) {
+    return;
+  }
+
+  const activeButton = document.querySelector(
+    `.month-btn[data-month="${monthNumber}"]`
+  );
+
+  if (!activeButton) return;
+
+
+  /* ACTIVE BUTTON */
+
   monthButtons.forEach(button => {
+    button.classList.remove("active");
+  });
 
-    button.addEventListener("click", () => {
-
-      const month =
-        button.dataset.month;
-
-      if (!month) {
-        return;
-      }
+  activeButton.classList.add("active");
 
 
-      monthButtons.forEach(item => {
-        item.classList.remove("active");
-      });
+  /* SCROLL MONTH BUTTON INTO VIEW */
 
-      button.classList.add("active");
-
-
-      if (monthImage) {
-
-        monthImage.classList.add(
-          "is-changing"
-        );
+  activeButton.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest",
+    inline: "center"
+  });
 
 
-        setTimeout(() => {
+  /* CHANGE IMAGE */
 
-          monthImage.src =
-            `assets/teodor-${month}.jpg`;
+  if (monthImage) {
+    monthImage.classList.add("is-changing");
 
-          monthImage.alt =
-            `Teodor - ${getMonthLabel(month)}`;
+    setTimeout(() => {
 
+      monthImage.src =
+        `assets/teodor-${monthNumber}.jpg`;
 
-          monthImage.onload = () => {
+      monthImage.alt =
+        `Teodor - ${getMonthLabel(monthNumber)}`;
 
-            monthImage.classList.remove(
-              "is-changing"
-            );
+      monthImage.onload = () => {
+        monthImage.classList.remove("is-changing");
+      };
 
-          };
+      setTimeout(() => {
+        monthImage.classList.remove("is-changing");
+      }, 300);
 
-
-          /*
-            In case the image is cached
-            and onload doesn't visibly fire.
-          */
-
-          setTimeout(() => {
-
-            monthImage.classList.remove(
-              "is-changing"
-            );
-
-          }, 300);
-
-        }, 180);
-
-      }
+    }, 180);
+  }
 
 
-      if (monthLabel) {
+  /* CHANGE LABEL */
 
-        monthLabel.textContent =
-          getMonthLabel(month);
+  if (monthLabel) {
+    monthLabel.textContent =
+      getMonthLabel(monthNumber);
+  }
+}
 
-      }
 
-    });
+/* CLICK ON MONTH */
+
+monthButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const month =
+      Number(button.dataset.month);
+
+    changeMonth(month);
 
   });
 
+});
+
+
+/* =========================
+   SWIPE
+========================= */
+
+const monthPhotoCard =
+  document.querySelector(".month-photo-card");
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+const SWIPE_THRESHOLD = 45;
+
+
+monthPhotoCard?.addEventListener(
+  "touchstart",
+  event => {
+
+    const touch = event.changedTouches[0];
+
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+
+  },
+  {
+    passive: true
+  }
+);
+
+
+monthPhotoCard?.addEventListener(
+  "touchend",
+  event => {
+
+    const touch = event.changedTouches[0];
+
+    const touchEndX =
+      touch.clientX;
+
+    const touchEndY =
+      touch.clientY;
+
+
+    const deltaX =
+      touchEndX - touchStartX;
+
+    const deltaY =
+      touchEndY - touchStartY;
+
+
+    /*
+      Ako je korisnik više scrollovao
+      vertikalno nego horizontalno,
+      ne tretiramo to kao swipe.
+    */
+
+    if (
+      Math.abs(deltaY) >
+      Math.abs(deltaX)
+    ) {
+      return;
+    }
+
+
+    if (
+      Math.abs(deltaX) <
+      SWIPE_THRESHOLD
+    ) {
+      return;
+    }
+
+
+    const activeButton =
+      document.querySelector(
+        ".month-btn.active"
+      );
+
+    if (!activeButton) return;
+
+
+    const currentMonth =
+      Number(
+        activeButton.dataset.month
+      );
+
+
+    /* SWIPE LEFT → NEXT MONTH */
+
+    if (deltaX < 0) {
+
+      if (currentMonth < 12) {
+        changeMonth(
+          currentMonth + 1
+        );
+      }
+
+    }
+
+
+    /* SWIPE RIGHT → PREVIOUS MONTH */
+
+    else {
+
+      if (currentMonth > 1) {
+        changeMonth(
+          currentMonth - 1
+        );
+      }
+
+    }
+
+  },
+  {
+    passive: true
+  }
+);
 
   /* =========================
      RSVP CONDITIONAL FIELD

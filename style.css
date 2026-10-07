@@ -240,15 +240,14 @@ h2 {
   position: absolute;
   inset: 0;
 
-  background: linear-gradient(
-    to top,
+  background: linear-gradient(to top,
 
-    rgba(20, 73, 139, 0.62) 0%,
-    rgba(18, 63, 121, 0.42) 22%,
-    rgba(8, 40, 92, 0.14) 55%,
-    rgba(4, 31, 79, 0.10) 100%
-  );
+      rgba(20, 73, 139, 0.62) 0%,
+      rgba(18, 63, 121, 0.42) 22%,
+      rgba(8, 40, 92, 0.14) 55%,
+      rgba(4, 31, 79, 0.10) 100%);
 }
+
 /* Mek završetak hero sekcije */
 .hero::after {
   content: "";
@@ -260,13 +259,11 @@ h2 {
 
   height: 150px;
 
-  background: linear-gradient(
-    to bottom,
-    rgba(25, 78, 145, 0) 0%,
-    rgba(25, 78, 145, 0.32) 40%,
-    rgba(25, 78, 145, 0.72) 72%,
-    #19539a 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(25, 78, 145, 0) 0%,
+      rgba(25, 78, 145, 0.32) 40%,
+      rgba(25, 78, 145, 0.72) 72%,
+      #19539a 100%);
 
   z-index: 1;
   pointer-events: none;
@@ -692,8 +689,9 @@ h2 {
   margin: 0 auto;
 
   padding: 14px 14px 18px;
-
-
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .month-photo {
@@ -711,6 +709,16 @@ h2 {
   height: 100%;
   object-fit: cover;
   display: block;
+
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .month-label {
@@ -1484,21 +1492,19 @@ h2,
 
   height: 240px;
 
-  background: linear-gradient(
-    to bottom,
+  background: linear-gradient(to bottom,
 
-    /* identična boja završetku HERO sekcije */
-    #19539a 0px,
-    #19539a 24px,
+      /* identična boja završetku HERO sekcije */
+      #19539a 0px,
+      #19539a 24px,
 
-    rgba(25, 83, 154, 0.96) 48px,
-    rgba(32, 103, 178, 0.82) 80px,
-    rgba(48, 126, 198, 0.60) 115px,
-    rgba(71, 145, 208, 0.38) 150px,
-    rgba(98, 161, 210, 0.20) 185px,
-    rgba(98, 161, 210, 0.08) 215px,
-    rgba(98, 161, 210, 0) 240px
-  );
+      rgba(25, 83, 154, 0.96) 48px,
+      rgba(32, 103, 178, 0.82) 80px,
+      rgba(48, 126, 198, 0.60) 115px,
+      rgba(71, 145, 208, 0.38) 150px,
+      rgba(98, 161, 210, 0.20) 185px,
+      rgba(98, 161, 210, 0.08) 215px,
+      rgba(98, 161, 210, 0) 240px);
 
   z-index: 1;
   pointer-events: none;
@@ -1533,19 +1539,17 @@ h2,
   .intro::before {
     height: 220px;
 
-    background: linear-gradient(
-      to bottom,
+    background: linear-gradient(to bottom,
 
-      #19539a 0px,
-      #19539a 20px,
+        #19539a 0px,
+        #19539a 20px,
 
-      rgba(25, 83, 154, 0.94) 44px,
-      rgba(32, 103, 178, 0.78) 72px,
-      rgba(48, 126, 198, 0.56) 105px,
-      rgba(71, 145, 208, 0.34) 138px,
-      rgba(98, 161, 210, 0.16) 174px,
-      rgba(98, 161, 210, 0) 220px
-    );
+        rgba(25, 83, 154, 0.94) 44px,
+        rgba(32, 103, 178, 0.78) 72px,
+        rgba(48, 126, 198, 0.56) 105px,
+        rgba(71, 145, 208, 0.34) 138px,
+        rgba(98, 161, 210, 0.16) 174px,
+        rgba(98, 161, 210, 0) 220px);
   }
 
 }
@@ -1558,18 +1562,16 @@ h2,
   position: absolute;
   inset: 0;
 
-  background: linear-gradient(
-    to top,
+  background: linear-gradient(to top,
 
-    /* pri dnu hero više nije taman */
-    rgba(170, 194, 220, 0.72) 0%,
+      /* pri dnu hero više nije taman */
+      rgba(170, 194, 220, 0.72) 0%,
 
-    rgba(92, 132, 177, 0.38) 28%,
+      rgba(92, 132, 177, 0.38) 28%,
 
-    rgba(24, 63, 112, 0.12) 58%,
+      rgba(24, 63, 112, 0.12) 58%,
 
-    rgba(4, 31, 79, 0.08) 100%
-  );
+      rgba(4, 31, 79, 0.08) 100%);
 }
 
 
@@ -1593,13 +1595,11 @@ h2,
 
   height: 100px;
 
-  background: linear-gradient(
-    to bottom,
-    rgba(220, 230, 240, 0) 0%,
-    rgba(225, 233, 240, 0.35) 35%,
-    rgba(232, 236, 238, 0.72) 68%,
-    #e8ecec 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(220, 230, 240, 0) 0%,
+      rgba(225, 233, 240, 0.35) 35%,
+      rgba(232, 236, 238, 0.72) 68%,
+      #e8ecec 100%);
 
   z-index: 1;
   pointer-events: none;
@@ -1636,13 +1636,11 @@ h2,
 
   height: 115px;
 
-  background: linear-gradient(
-    to bottom,
-    #e8ecec 0%,
-    rgba(237, 238, 235, 0.88) 30%,
-    rgba(244, 241, 234, 0.58) 62%,
-    rgba(251, 247, 238, 0) 100%
-  );
+  background: linear-gradient(to bottom,
+      #e8ecec 0%,
+      rgba(237, 238, 235, 0.88) 30%,
+      rgba(244, 241, 234, 0.58) 62%,
+      rgba(251, 247, 238, 0) 100%);
 
   z-index: 1;
   pointer-events: none;
